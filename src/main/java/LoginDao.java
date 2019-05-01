@@ -131,7 +131,6 @@ public class LoginDao {
 	            	Employee empl = new Employee();
 	                empl.setEmployeeID(rs.getInt("EMPLOYEE_ID"));
 	                empl.setName(rs.getString("NAME"));
-	                empl.setState(rs.getString("STATE"));
 	                empl.setPhone(rs.getString("PHONE_NUMBER"));
 	                empl.setSupervisor(rs.getString("SUPERVISORS"));
 	                empl.setUsername(rs.getString("USERNAME"));
