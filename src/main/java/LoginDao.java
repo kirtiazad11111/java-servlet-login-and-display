@@ -16,7 +16,7 @@ public class LoginDao {
 
 	public static boolean validate(String name, String pass) throws IOException {
 		
-		    String fullDirectory = "\tmp\\demo";
+		    String fullDirectory = "\\tmp\\demo";
 		FileReader fr = new FileReader(fullDirectory);
         @SuppressWarnings("resource")
 		BufferedReader br = new BufferedReader(fr);
