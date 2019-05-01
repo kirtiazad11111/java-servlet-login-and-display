@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,18 +14,25 @@ public class LoginDao {
 
 	private static Connection connection = null;
 
-	public static boolean validate(String name, String pass) {
+	public static boolean validate(String name, String pass) throws IOException {
+		
+		    String fullDirectory = "\tmp\\demo";
+		FileReader fr = new FileReader(fullDirectory);
+        @SuppressWarnings("resource")
+		BufferedReader br = new BufferedReader(fr);
+        String dbURL="";
+        dbURL=br.readLine();
         boolean status = false;
         Connection conn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
-
-        String url = "jdbc:mysql://mysqljava.mysql.database.azure.com/";
+       // String url = "jdbc:mysql://mysqljava.mysql.database.azure.com/";
+        String url = "jdbc:mysql://"+dbURL+"/";
+        System.out.println(url);
         String dbName = "COMPOSITEAPPS";
         String driver = "com.mysql.jdbc.Driver";
         String userName = "java@mysqljava";
         String password = "Infy@1234";
-
         try {
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(url + dbName, userName, password);
@@ -73,12 +84,19 @@ public class LoginDao {
             return connection;
         else {
             try {
-
-        String url = "jdbc:mysql://mysqljava.mysql.database.azure.com/";
-        String dbName = "COMPOSITEAPPS";
-        String driver = "com.mysql.jdbc.Driver";
-        String userName = "java@mysqljava";
-        String password = "Infy@1234";
+     		    String fullDirectory = "/tmp/demo";
+     		FileReader fr = new FileReader(fullDirectory);
+             @SuppressWarnings("resource")
+     		BufferedReader br = new BufferedReader(fr);
+             String dbURL="";
+             dbURL=br.readLine();
+               // String url = "jdbc:mysql://mysqljava.mysql.database.azure.com/";
+                String url = "jdbc:mysql://"+dbURL+"/";
+                String dbName = "COMPOSITEAPPS";
+                String driver = "com.mysql.jdbc.Driver";
+                String userName = "java@mysqljava";
+                String password = "Infy@1234";
+                System.out.println(url);
 
                 Class.forName(driver);
                 connection = DriverManager.getConnection(url + dbName, userName, password);
@@ -87,7 +105,13 @@ public class LoginDao {
                 e.printStackTrace();
             } catch (SQLException e) {
                 e.printStackTrace();
-            }
+            } catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             return connection;
         }
     }
@@ -107,6 +131,7 @@ public class LoginDao {
 	            	Employee empl = new Employee();
 	                empl.setEmployeeID(rs.getInt("EMPLOYEE_ID"));
 	                empl.setName(rs.getString("NAME"));
+	                empl.setState(rs.getString("STATE"));
 	                empl.setPhone(rs.getString("PHONE_NUMBER"));
 	                empl.setSupervisor(rs.getString("SUPERVISORS"));
 	                empl.setUsername(rs.getString("USERNAME"));
